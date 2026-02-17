@@ -1,8 +1,8 @@
-'use client';
-
 import Calendar from "@/components/calendar/calendar";
 
 export default function CalendarPage() {
+  const initialDateISO = new Date().toISOString();
+
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12 lg:py-16">
@@ -14,7 +14,7 @@ export default function CalendarPage() {
             Navigate through your schedule with year, month, week, and day views
           </p>
         </div>
-        <Calendar />
+        <Calendar initialDateISO={initialDateISO} />
       </div>
     </main>
   );

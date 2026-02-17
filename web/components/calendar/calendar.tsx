@@ -4,15 +4,19 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { YearView } from "./year-view";
 import { MonthView } from "./month-view";
+import { DayView } from "./day-view";
+import { WeekView } from "./week-view";
 
 type ViewType = "year" | "month" | "week" | "day";
 
 interface CalendarProps {
-  initialDate?: Date;
+  initialDateISO?: string;
 }
 
-export default function Calendar({ initialDate = new Date() }: CalendarProps) {
-  const [curDate, setCurDate] = useState<Date>(initialDate);
+export default function Calendar({ initialDateISO }: CalendarProps) {
+  const [curDate, setCurDate] = useState<Date>(() =>
+    initialDateISO ? new Date(initialDateISO) : new Date(),
+  );
   const [view, setView] = useState<ViewType>("month");
 
   const handleDateChange = (newDate: Date) => {
@@ -49,6 +53,19 @@ export default function Calendar({ initialDate = new Date() }: CalendarProps) {
         )}
         {view === "month" && (
           <MonthView
+            date={curDate}
+            onDateChange={handleDateChange}
+            onDayClick={() => console.log("day clicked")}
+          />
+        )}
+        {view === "day" && (
+          <DayView
+            date={curDate}
+            onDateChange={handleDateChange}
+          />
+        )}
+        {view === "week" && (
+          <WeekView
             date={curDate}
             onDateChange={handleDateChange}
             onDayClick={() => console.log("day clicked")}
